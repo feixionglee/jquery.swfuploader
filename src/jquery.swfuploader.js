@@ -68,6 +68,16 @@
   };
 
   SwfUploader.prototype = {
+		getStatus : function() {
+			return {
+				numFilesQueued 			: this.numFilesQueued,
+				numFilesUploading 	: this.numFilesUploading,
+				numFilesCompleted 	: this.numFilesCompleted,
+				totoalBytes					: this.totoalBytes,
+				totoalBytesUploaded	: this.totoalBytesUploaded
+			};
+		},
+		
 		observe : function(eventName, fn, scope){
 			this.events[eventName] = this.events[eventName] || [];
 			this.events[eventName].push([fn, scope]);
@@ -101,6 +111,7 @@
   	// file_queued_handler
   	fileQueued : function(file){
 			this.numFilesQueued ++;
+			this.totoalBytes += file.size;
 			this.publish("file_queued_handler", arguments);
   	},
   	
@@ -234,6 +245,14 @@
 				el = el[0];
 			}
 			this.swfuploader.options.button_placeholder = el;
+		},
+		
+		swf : function() {
+			return this.swfuploader.swfu;
+		},
+		
+		getStatus : function() {
+			return this.swfuploader.getStatus();
 		}
 	};
 	

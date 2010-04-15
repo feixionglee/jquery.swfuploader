@@ -1,0 +1,47 @@
+.upload-bucket .header {border:1px solid white; width:480px;}
+.upload-bucket .header div{color:#888;}
+
+.upload-container.init{width:180px;}
+.upload-container.init .footer{width:180px;}
+.upload-container.init .upload-queue{width:180px;}
+.upload-container.init .header{display:none;}
+.upload-container.init .footer div.upload-total-files{display:none;}
+.upload-container.init .footer div.upload-total-bytes{display:none;}
+
+.upload-bucket ul li {display:inline-block;}
+.upload-bucket ul li div{display:inline-block;}
+.upload-bucket ul li div.name {width:290px;padding-left:10px;}
+.upload-bucket ul li div.size {width:80px;}
+.upload-bucket ul li div.select {width:78px;text-align:right;padding-right:10px;}
+
+.upload-bucket .upload-queue {width:480px;border:1px solid #888;}
+.upload-bucket .upload-queue .upload-progress{padding:5px 0;border-bottom:1px solid #ccc;position:relative;}
+.upload-bucket .upload-queue .upload-progress {position:relative;}
+.upload-bucket .upload-queue .upload-progress .indicator{width:0;height:100%;position:absolute;left:0;top:0;}
+.upload-bucket .upload-queue .upload-progress .indicator .padding{padding:0;margin:0;width:100%;height:100%;background:#96be65;opacity:0.4;display:inline-block;position:absolute;left:0;top:0;}
+.upload-bucket .upload-queue .upload-progress .indicator .indicator-head{height:100%;width:3px;background:red;display:inline-block;float:right;opacity:100}
+
+.upload-bucket .upload-queue div.select {width:60px;text-align:right;}
+.upload-bucket .upload-queue div.select a.remove{display:inline-block;width:10px;background-repeat:no-repeat;background-position:0 50%;background-color:transparent;background-image:url('/images/trash-can.gif');}
+.upload-bucket .upload-queue div.select a.remove:hover{background-position:-10px 50%;}
+
+.upload-bucket .upload-queue div.select span.success{display:inline-block;width:14px;height:11px;background-image:url('/images/icon_check_small.png');}
+
+
+.upload-bucket .footer {border:1px solid #888;background: #888;padding:10px 0; width:480px; margin-bottom: 20px;}
+.upload-bucket .footer
+.upload-bucket .footer div{color: #444;}
+.upload-bucket .footer div.upload-button{width:270px;padding-left:10px;position:relative;}
+.upload-bucket .footer div.upload-button object.swfupload{position:absolute;left:10px;top:-12px;}
+.upload-bucket .footer div.total-files{width:80px;}
+.upload-bucket .footer div.total-size{width:80px;text-align:right;padding-right:10px;}
+
+
+.image-container{}
+.image-container .photo {margin:10px;padding:10px;border:1px solid #a0a0a0; width:600px;}
+.image-container .photo .image-name{padding:0 20px;font-size:14px;font-weight:bold;}
+.image-container .photo img{padding:10px;}
+.image-container .photo .links{margin:0 0 0 20px;display:inline-block;vertical-align:top;}
+.image-container .photo .links .link{margin:5px 0;}
+.image-container .photo .links .link .label{font-weight:bold;display:inline-block;width:40px;}
+.image-container .photo .links .link .location{width:300px;font-size:12px;padding:2px;border:1px solid #a0a0a0;color:#909090;}
