@@ -19,7 +19,7 @@
         // options priority (high to low) :
         //  * options passed in
         //  * metadata options
-        //  * template options
+        //  * set options
         //  * default options
         var settings = $.extend( {}, SwfUploader.defaultOptions, klass.defaultOptions, metadata, options );
 
@@ -55,6 +55,21 @@
     
     this.events = {};
     
+    // save user defined callbacks
+    this.userCallbacks = {
+      init_handler                    : this.options.init_handler,
+      file_dialog_complete_handler    : this.options.file_dialog_complete_handler,
+      file_queued_handler             : this.options.file_queued_handler,
+      file_queue_error_handler        : this.options.file_queue_error_handler,
+      queue_complete_handler          : this.options.queue_complete_handler,
+      upload_start_handler            : this.options.upload_start_handler,
+      upload_progress_handler         : this.options.upload_progress_handler,
+      upload_success_handler          : this.options.upload_success_handler,
+      upload_complete_handler         : this.options.upload_complete_handler,
+      upload_error_handler            : this.options.upload_error_handler
+    };
+    
+    // override callbacks with our own
     this.options.file_dialog_complete_handler  =  bindFunction(this.fileDialogComplete, this);
     this.options.file_queued_handler           =  bindFunction(this.fileQueued, this);
     this.options.file_queue_error_handler      =  bindFunction(this.fileQueueError, this);
@@ -67,6 +82,15 @@
 
     // creating set object
     this.set = new this.setKlass(this);
+    
+    var self = this;
+    // now the set should have registered their callbacks already
+    // we use register user callbacks now
+    $.each(this.userCallbacks, function(eventName, fn){
+      if(typeof fn === "function"){
+        self.observe(eventName, fn);        
+      }
+    });
 
     // letting sets know it can start working!
     this.init();
@@ -96,7 +120,7 @@
     },
     
     init : function() {
-      this.publish("init", arguments);
+      this.publish("init_handler", arguments);
       
       // creating swfuplod object
       this.swfu = new SWFUpload(this.options);
@@ -189,7 +213,7 @@
     this.swfuploader = swfuploader;
     this.$el = this.swfuploader.$el;
     
-    this.swfuploader.observe("init"                         , bindFunction(this.init, this));
+    this.swfuploader.observe("init_handler"                 , bindFunction(this.init, this));
     this.swfuploader.observe("file_dialog_complete_handler" , bindFunction(this.fileDialogComplete, this));
     this.swfuploader.observe("file_queued_handler"          , bindFunction(this.fileQueued, this));
     this.swfuploader.observe("file_queue_error_handler"     , bindFunction(this.fileQueueError, this));
