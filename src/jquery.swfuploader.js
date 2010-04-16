@@ -158,7 +158,6 @@
     
     // upload_progress_handler
     uploadProgress: function(file, bytesLoaded, bytesTotal) {
-      console.log(arguments);
       this.publish("upload_progress_handler", arguments);
     },
     
