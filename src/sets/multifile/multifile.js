@@ -40,7 +40,7 @@
     $.SwfUploader.sets.AbstractSet.apply(this, arguments);
   };
   
-  $.SwfUploader.sets.MultiFile.prototype = $.extend($.SwfUploader.sets.AbstractSet.prototype, { 
+  $.extend($.SwfUploader.sets.MultiFile.prototype, $.SwfUploader.sets.AbstractSet.prototype, { 
     init : function() {
       this.uploadBucket = new UploadBucket(this.$el);
       this.setButtonPlaceholder(this.uploadBucket.getButtonPlaceHolder());

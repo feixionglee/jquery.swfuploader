@@ -4,7 +4,7 @@
     $.SwfUploader.sets.AbstractSet.apply(this, arguments);
   };
   
-  $.SwfUploader.sets.ExampleSet.prototype = $.extend($.SwfUploader.sets.AbstractSet.prototype, {
+  $.extend($.SwfUploader.sets.ExampleSet.prototype, $.SwfUploader.sets.AbstractSet.prototype, {
     
     /***************************************************************************************************
     *

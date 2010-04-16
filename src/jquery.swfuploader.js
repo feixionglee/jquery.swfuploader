@@ -9,7 +9,7 @@
       if ( !$el.data('swfuploader') ) {
         //  // try to get metadata
         var metadata = $el.metadata ? ( $el.metadata().swfuploader || {} ) : {};
-      
+        
         // determine template
         var set = options.set || metadata.set || SwfUploader.defaultOptions.set;
       
@@ -52,7 +52,7 @@
     };
     
     this.setKlass = $.SwfUploader.sets[this.options.set];
-    
+
     this.events = {};
     
     // save user defined callbacks
@@ -272,6 +272,10 @@
         el = el[0];
       }
       this.swfuploader.options.button_placeholder = el;
+
+      // overridding this just in case users pass this in by accident
+      // and SWFUpload gets confused over which one we want to use.
+      this.swfuploader.options.button_placeholder_id = null;
     },
     
     swf : function() {
