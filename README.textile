@@ -129,7 +129,9 @@ h3. init_handler
 All other SWFUpload properties and callbacks are usable as well.
 Please refer to the "SWFUpload Documentation":http://demo.swfupload.org/Documentation/ for more details
 
-h1. More Complicated Example:
+h1. Example Showing All Available Options
+
+You probably will never need to do this many options, but here it is anyway!
 
 <pre>
   <div class="swfuploader"></div>
@@ -143,13 +145,13 @@ h1. More Complicated Example:
         // these are all standard SWFUpload initialization properties
         // check SWFUpload documentation for more details
         // http://demo.swfupload.org/Documentation/
-        flash_url               : "/javascripts/swfupload/swfupload.swf",
+        flash_url               : "/swfupload.swf",
         upload_url              : "/upload",
         debug                   : false,
         use_query_string        : true,
         file_post_name          : 'image[attachment]',
         post_params             : {a:'b', c:'d'},
-        button_image_url        : "",
+        button_image_url        : "/images/mybutton.png",
         button_width            : "140",
         button_height           : "24",
         button_text             : '<span class="button">Select Files to Upload</span>',
