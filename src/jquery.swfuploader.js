@@ -40,11 +40,16 @@
     this.$el = $(el);
     this.options = options;
     
-    this.numFilesQueued = 0;
-    this.numFilesUploading = 0;
-    this.numFilesCompleted = 0;
-    this.totoalBytes = 0;
-    this.totoalBytesUploaded = 0;
+    this.status = {
+      numFilesQueued      : 0,
+      numFilesUploading   : 0,
+      numFilesCompleted   : 0,
+      numFilesSuccess     : 0,
+      numFilesFailed      : 0,
+      totalFiles          : 0,
+      totalBytes          : 0,
+      totalBytesUploaded  : 0
+    };
     
     this.setKlass = $.SwfUploader.sets[this.options.set];
     
@@ -69,15 +74,7 @@
 
   SwfUploader.prototype = {
     getStatus : function() {
-      return {
-        numFilesQueued      : this.numFilesQueued,
-        numFilesUploading   : this.numFilesUploading,
-        numFilesCompleted   : this.numFilesCompleted,
-        numFilesSuccess     : this.numFilesCompleted,
-        numFilesFailed      : this.numFilesCompleted,
-        totoalBytes         : this.totoalBytes,
-        totoalBytesUploaded : this.totoalBytesUploaded
-      };
+      return this.status;
     },
     
     observe : function(eventName, fn, scope){
@@ -107,18 +104,20 @@
   
     // file_dialog_complete_handler
     fileDialogComplete: function(numFilesSelected, numFilesQueued, totalFilesInQueue) {
+      this.status.totalFiles += numFilesSelected;
       this.publish("file_dialog_complete_handler", arguments);
     },
     
     // file_queued_handler
     fileQueued : function(file){
-      this.numFilesQueued ++;
-      this.totoalBytes += file.size;
+      this.status.numFilesQueued ++;
+      this.status.totalBytes += file.size;
       this.publish("file_queued_handler", arguments);
     },
     
     // file_queue_error_handler
     fileQueueError : function(file, errorCode, message){
+      this.status.numFilesFailed++;
       this.publish("file_queue_error_handler", arguments);
     },
     
@@ -129,30 +128,33 @@
     
     // upload_start_handler
     uploadStart : function(file){
-      this.numFilesUploading++;
+      this.status.numFilesUploading++;
       this.publish("upload_start_handler", arguments);
     },
     
     // upload_progress_handler
     uploadProgress: function(file, bytesLoaded, bytesTotal) {
+      console.log(arguments);
       this.publish("upload_progress_handler", arguments);
     },
     
     // upload_success_handler
     uploadSuccess: function(file, serverData, response) {
+      this.status.numFilesSuccess++;
       this.publish("upload_success_handler", arguments);
     },
     
     // upload_complete_handler
     uploadComplete : function(file){
-      this.numFilesQueued--;
-      this.numFilesUploading--;
-      this.numFilesCompleted++;
+      this.status.numFilesQueued--;
+      this.status.numFilesUploading--;
+      this.status.numFilesCompleted++;
       this.publish("upload_complete_handler", arguments);
     },
     
     // upload_error_handler
     uploadError: function(file, errorCode, message) {
+      this.status.numFilesFailed++;
       this.publish("upload_error_handler", arguments);
     }
   };
@@ -176,7 +178,7 @@
     button_window_mode      : SWFUpload.WINDOW_MODE.TRANSPARENT,
     button_cursor           : SWFUpload.CURSOR.HAND,    
 
-    file_size_limit         : "1 MB",
+    file_size_limit         : "100 MB",
     file_types              : "*.*",
     file_types_description  : "All Files",
     file_upload_limit       : 0,
