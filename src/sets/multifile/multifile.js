@@ -217,12 +217,8 @@
       .append(this.buildRemoveButton())
       .append(this.buildStatus())
       .appendTo(this.$target)
-      .mouseover(function(){
-        self.$status.show();        
-      })
-      .mouseout(function(){
-        self.$status.hide();
-      })
+      .hoverIntent( function(){ self.$status.fadeIn();}, function(){ self.$status.fadeOut();});
+
     uploadProgressInstances[file.id] = this;    
   };
   
