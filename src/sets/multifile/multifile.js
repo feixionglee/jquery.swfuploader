@@ -266,8 +266,11 @@
 		},
 		
 		setError : function() {
+		},
+		
+		setComplete : function(){
 	    this.toggleCancel(false);
-			this.$removeButton.append(this.$successButton);
+			this.$removeButton.append(this.$successButton);		  
 		}
 		
 	};
