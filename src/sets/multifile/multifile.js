@@ -19,7 +19,7 @@
     fileQueued : function(file){
       var progress = new UploadProgress(file, this.uploadBucket.$container, this.swf());
       progress.toggleCancel(true);
-      
+      progress.setStatus("Pending...");
       this.uploadBucket.updateStats(this.getStatus());
     },
     
@@ -66,6 +66,7 @@
     uploadStart : function(file){
       var progress = UploadProgress.getInstance(file.id);
       progress.setStart();
+      progress.setStatus("Pending...");
       
       this.uploadBucket.updateStats(this.getStatus());
     },
@@ -74,12 +75,14 @@
       var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
       var progress = UploadProgress.getInstance(file.id);
       progress.setProgress(percent);
+      progress.setStatus(percent + "% done.");
       
       this.uploadBucket.updateStats(this.getStatus());
     },
     
     uploadSuccess: function(file, serverData, response) {
       var progress = UploadProgress.getInstance(file.id);
+      progress.setStatus("Success!");
       progress.setComplete();
       progress.toggleCancel(false);
       
@@ -199,18 +202,28 @@
   
   var uploadProgressInstances = {};
   var UploadProgress = function(file, target, swfu){
+    var self = this;
+    
     this.file = file;
     this.swfu = swfu;
     this.$target = target;
     this.buildSuccessButton();
+    this.buildErrorButton();
 
     this.$el = $('<div>').addClass("upload-progress")
       .append(this.buildIndicator())
       .append(this.buildFileName())
       .append(this.buildFileSize())
       .append(this.buildRemoveButton())
+      .append(this.buildStatus())
       .appendTo(this.$target)
-    uploadProgressInstances[file.id] = this;
+      .mouseover(function(){
+        self.$status.show();        
+      })
+      .mouseout(function(){
+        self.$status.hide();
+      })
+    uploadProgressInstances[file.id] = this;    
   };
   
   UploadProgress.getInstance = function(fileId){
@@ -229,7 +242,7 @@
     },
     
     buildRemoveButton: function(){
-      this.$removeButtonLink = $("<a>").addClass("remove").attr("href", "#").html("&nbsp");
+      this.$removeButtonLink = $("<a>").addClass("remove").attr("href", "#");
       this.$removeButton = $("<div>").addClass("select").append(this.$removeButtonLink);
       return this.$removeButton;      
     },
@@ -246,10 +259,27 @@
       return this.$indicator;
     },
     
+    buildStatus: function(){
+      var $statusLeft = $('<div>').addClass("status-left");
+      this.$statusMessage = $('<div>').addClass("status-message");
+      this.$status = $('<div>')
+        .addClass("status")
+        .append($statusLeft)
+        .append(this.$statusMessage)
+        .hide();
+        
+      return this.$status;
+    },
+    
     buildSuccessButton: function(){
-      this.$successButton = $("<span>").addClass("success").html("&nbsp");
+      this.$successButton = $("<span>").addClass("success");
       return this.$successButton;     
     },
+    
+    buildErrorButton: function(){
+      this.$errorButton = $("<span>").addClass("error");
+      return this.$errorButton;     
+    },    
     
     toggleCancel: function(bool){
       if(bool){
@@ -260,11 +290,13 @@
     },
     
     setError : function() {
-      
+      this.toggleCancel(false);
+      this.$el.addClass("error");
+      this.$removeButton.append(this.$errorButton);      
     },
     
     setStatus : function(status) {
-      
+      this.$statusMessage.html(status);
     },
     
     setStart : function() {
@@ -276,10 +308,8 @@
       this.$indicator.css({width : width});
     },
     
-    setError : function() {
-    },
-    
     setComplete : function(){
+      this.$el.addClass("success");
       this.toggleCancel(false);
       this.$removeButton.append(this.$successButton);     
     }

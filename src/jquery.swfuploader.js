@@ -176,7 +176,7 @@
     button_window_mode      : SWFUpload.WINDOW_MODE.TRANSPARENT,
     button_cursor           : SWFUpload.CURSOR.HAND,    
 
-    file_size_limit         : "100 MB",
+    file_size_limit         : "1 MB",
     file_types              : "*.*",
     file_types_description  : "All Files",
     file_upload_limit       : 0,

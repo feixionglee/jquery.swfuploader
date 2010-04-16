@@ -15,16 +15,20 @@
 
 .upload-bucket .upload-queue {width:480px;border:1px solid #888;}
 .upload-bucket .upload-queue .upload-progress{padding:5px 0;border-bottom:1px solid #ccc;position:relative;}
+.upload-bucket .upload-queue .upload-progress.success{background:#d5e5c2;}
+.upload-bucket .upload-queue .upload-progress.error{background:#ff9999;}
 .upload-bucket .upload-queue .upload-progress div{position:relative;}
 .upload-bucket .upload-queue .upload-progress .indicator{width:0;height:100%;position:absolute;left:0;top:0;}
 .upload-bucket .upload-queue .upload-progress .indicator .indicator-padding{padding:0;margin:0;width:100%;height:100%;background:#d5e5c2;display:inline-block;position:absolute;left:0;top:0;}
 .upload-bucket .upload-queue .upload-progress .indicator .indicator-marker{height:100%;width:3px;background:red;display:inline-block;float:right;opacity:100}
+.upload-bucket .upload-queue .upload-progress .status{position:absolute;height:30px;top:0;left:485px;width:100%;}
+.upload-bucket .upload-queue .upload-progress .status .status-left{display:inline-block;position:relative;height:30px;width:14px;background-image:url('status-left.png');}
+.upload-bucket .upload-queue .upload-progress .status .status-message{display:inline-block;position:relative;top:-12px;height:12px;padding:8px;line-height:12px;font-size:12px;border:1px solid #656565;border-left:none;background: #8f8f8f;color:white;}
 
 .upload-bucket .upload-queue div.select {width:60px;text-align:right;}
-.upload-bucket .upload-queue div.select a.remove{display:inline-block;width:10px;background-repeat:no-repeat;background-position:0 50%;background-color:transparent;background-image:url('trash-can.gif');}
-.upload-bucket .upload-queue div.select a.remove:hover{background-position:-10px 50%;}
-
-.upload-bucket .upload-queue div.select span.success{display:inline-block;width:14px;height:11px;background-image:url('check.png');}
+.upload-bucket .upload-queue div.select a.remove{display:inline-block;width:16px;height:16px;background-image:url('delete.png');}
+.upload-bucket .upload-queue div.select span.success{display:inline-block;width:16px;height:16px;background-image:url('tick.png');}
+.upload-bucket .upload-queue div.select span.error{display:inline-block;width:16px;height:16px;background-image:url('exclamation.png');}
 
 
 .upload-bucket .footer {border:1px solid #888;background: #888;padding:10px 0; width:480px; margin-bottom: 20px;}
