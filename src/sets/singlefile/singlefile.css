@@ -1,0 +1,5 @@
+.upload-container{}
+.upload-container .upload-progress-bar{width:150px;height:15px;border:1px solid #ccc;display:inline-block;}
+.upload-container .upload-progress-bar .indicator{background:#c0ffee;height:100%;width:0;}
+.upload-container .upload-cancel{margin-left:15px;line-height:17px;}
+.upload-container .upload-status{width:200px;color:#888;}

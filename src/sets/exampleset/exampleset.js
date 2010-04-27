@@ -10,7 +10,7 @@
     *
     *  This function is called when swfuploader finishes instantiation
     *  The SwfUpload Object is not created yet.
-    *  You can create your UI objects, setting up interfaction behaviors here
+    *  You can create your UI objects, setting up interactions and behaviors here
     *  IMPORTANT: you must call #setButtonPlaceholder here
     *             so SwfUpload can create the flash object by replacing the placeholder element
     *

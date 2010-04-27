@@ -200,7 +200,8 @@
     button_text_left_padding: 0,
     button_text_top_padding : 0,
     button_window_mode      : SWFUpload.WINDOW_MODE.TRANSPARENT,
-    button_cursor           : SWFUpload.CURSOR.HAND,    
+    button_cursor           : SWFUpload.CURSOR.HAND,
+    button_action           : SWFUpload.BUTTON_ACTION.SELECT_FILES,
 
     file_size_limit         : "100 MB",
     file_types              : "*.*",
