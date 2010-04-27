@@ -33,6 +33,6 @@
 
 
 .upload-bucket .footer {border:1px solid #888;background: #888;padding:0 0 10px 0; width:480px; margin-bottom: 20px;}
-.upload-bucket .footer object.swfupload{padding-left:10px;top:10px;width:150px;position:relative;}
+.upload-bucket .footer object.swfupload{top:10px;width:150px;position:relative;}
 .upload-bucket .footer div.total-files{display:inline-block;width:150px;text-align:right;color:#444;}
 .upload-bucket .footer div.total-size{display:inline-block;width:150px;text-align:right;padding-right:10px;color:#444;}

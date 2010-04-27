@@ -1,6 +1,7 @@
 (function($) {
 
   $.fn.swfuploader = function(options){
+    options = options || {};
     this.each(function(){
       // get the current element
       var $el = $(this);
@@ -9,7 +10,6 @@
       if ( !$el.data('swfuploader') ) {
         //  // try to get metadata
         var metadata = $el.metadata ? ( $el.metadata().swfuploader || {} ) : {};
-        
         // determine template
         var set = options.set || metadata.set || SwfUploader.defaultOptions.set;
       
@@ -195,7 +195,7 @@
     button_width            : "140",
     button_height           : "24",
     button_text             : '<span class="button">Select Files to Upload</span>',
-    button_text_style       : ".button {font-size: 14px; kerning: true; font-weight: bold; color: #0063DC;text-decoration:underline;}",
+    button_text_style       : ".button {font-size: 14px; kerning: true; font-weight: bold; color: #0063DC;text-decoration:underline;text-align:center}",
     button_text_left_padding: 0,
     button_text_top_padding : 0,
     button_window_mode      : SWFUpload.WINDOW_MODE.TRANSPARENT,
