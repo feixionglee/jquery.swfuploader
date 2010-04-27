@@ -1,12 +1,27 @@
 (function($){
   
-  var t = (typeof I18n !== "undefined" ? I18n.t : function(scope, options){
-    return options.default;
-  });
+  var bindFunction = function(fn, target) {
+    return function(){
+      return fn.apply(target, arguments);
+    };
+  };
   
-  var toNumber = (typeof I18n !== "undefined" ? I18n.toNumber : function(number, options){
-    return parseInt(number.toString());
-  });
+  if(typeof I18n !== "undefined"){
+
+    var t = bindFunction(I18n.t, I18n);
+    var toNumber = bindFunction(I18n.toNumber, I18n);
+
+  }else{
+
+    var t = function(scope, options){
+      return options["default"];
+    };
+    
+    var toNumber = function(number, options){
+      return parseInt(number.toString());
+    };
+  }
+  
   
   var formatFileSize = function(size){
     var unit = "";
@@ -56,14 +71,14 @@
     fileQueued : function(file){
       var progress = new UploadProgress(file, this.uploadBucket.$container, this.swf());
       progress.toggleCancel(true);
-      progress.setStatus( t( "jquery.swfuploader.multifile.status.pending", { default : "Queued For Upload." } ) );
+      progress.setStatus( t( "jquery.swfuploader.multifile.status.pending", { 'default' : "Queued For Upload." } ) );
       this.uploadBucket.updateStats(this.getStatus());
     },
     
     fileQueueError : function(file, errorCode, message){
       if (errorCode === SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED) {
         var str = "You have attempted to queue too many files.\n" + (message === 0 ? "You have reached the upload limit." : "You may select " + (message > 1 ? "up to " + message + " files." : "one file."));
-        alert( t( "jquery.swfuploader.multifile.errors.queueFull", { message : message , default : str } ) );
+        alert( t( "jquery.swfuploader.multifile.errors.queue_full", { count : message , 'default' : str } ) );
         return;
       }
 
@@ -74,17 +89,17 @@
 
       switch (errorCode) {
       case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-        progress.setStatus( t( "jquery.swfuploader.multifile.errors.file_too_big", { code : errorCode, message : message, default : "File is too big." } ) );
+        progress.setStatus( t( "jquery.swfuploader.multifile.errors.file_too_big", { code : errorCode, message : message, 'default' : "File is too big." } ) );
         break;
       case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-        progress.setStatus( t( "jquery.swfuploader.multifile.errors.zero_byte_file", { code : errorCode, message : message, default : "Cannot upload Zero Byte files." } ) );
+        progress.setStatus( t( "jquery.swfuploader.multifile.errors.zero_byte_file", { code : errorCode, message : message, 'default' : "Cannot upload Zero Byte files." } ) );
         break;
       case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-        progress.setStatus( t( "jquery.swfuploader.multifile.errors.invalid_file_type", { code : errorCode, message : message, default : "Invalid File Type." } ) );
+        progress.setStatus( t( "jquery.swfuploader.multifile.errors.invalid_file_type", { code : errorCode, message : message, 'default' : "Invalid File Type." } ) );
         break;
       default:
         if (file !== null) {
-          progress.setStatus( t( "jquery.swfuploader.multifile.errors.unknown_error", { code : errorCode, message : message, default : "Ooops... Something went wrong." } ) );
+          progress.setStatus( t( "jquery.swfuploader.multifile.errors.unknown_error", { code : errorCode, message : message, 'default' : "Ooops... Something went wrong." } ) );
         }
         break;
       }
@@ -100,7 +115,7 @@
     uploadStart : function(file){
       var progress = UploadProgress.getInstance(file.id);
       progress.setStart();
-      progress.setStatus( t( "jquery.swfuploader.multifile.status.starting", { default : "Starting To Upload." } ) );
+      progress.setStatus( t( "jquery.swfuploader.multifile.status.starting", { 'default' : "Starting To Upload." } ) );
       
       this.uploadBucket.updateStats(this.getStatus());
     },
@@ -110,14 +125,14 @@
       var progress = UploadProgress.getInstance(file.id);
       progress.setProgress(percent);
       var defaultMessage = percent + "% done.";
-      progress.setStatus(  t( "jquery.swfuploader.multifile.status.percent_done", { percent : percent, default : defaultMessage } ) );
+      progress.setStatus(  t( "jquery.swfuploader.multifile.status.percent_done", { percent : percent, 'default' : defaultMessage } ) );
       
       this.uploadBucket.updateStats(this.getStatus());
     },
     
     uploadSuccess: function(file, serverData, response) {
       var progress = UploadProgress.getInstance(file.id);
-      progress.setStatus( t( "jquery.swfuploader.multifile.status.success", { default : "Successfully Uploaded." } ) );
+      progress.setStatus( t( "jquery.swfuploader.multifile.status.success", { 'default' : "Successfully Uploaded." } ) );
       progress.setComplete();
       progress.toggleCancel(false);
       
@@ -130,7 +145,6 @@
     
     uploadError: function(file, errorCode, message) {
       var progress = UploadProgress.getInstance(file.id);
-      var message = null;
       var defaultMessage = null;
       
       progress.setError();
@@ -139,39 +153,39 @@
       switch (errorCode) {
       case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
         defaultMessage = "Upload Error: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.upload_error", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.upload_error", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
         defaultMessage = "Upload Failed: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.upload_failure", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.upload_failure", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.IO_ERROR:
         defaultMessage = "Server (IO) Error: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.server_io_error", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.server_io_error", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.SECURITY_ERROR:
         defaultMessage = "Security Error: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.server_io_error", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.security_error", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
         defaultMessage = "Upload limit exceeded: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.upload_limit_exceeded", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.upload_limit_exceeded", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED:
         defaultMessage = "Failed Validation, upload skipped. Message: " + message;
-        message =  t( "jquery.swfuploader.multifile.errors.validation_failure", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.validation_failure", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.FILE_CANCELLED:
         defaultMessage = "File Canceled.";
-        message =  t( "jquery.swfuploader.multifile.errors.file_canceled", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.file_canceled", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
         defaultMessage = "Upload Stopped.";
-        message =  t( "jquery.swfuploader.multifile.errors.stopped", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.stopped", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       default:
         defaultMessage = "Unhandled Error: " + errorCode;
-        message =  t( "jquery.swfuploader.multifile.errors.unkown_error", { default : defaultMessage, message : message, error : errorCode } );
+        message =  t( "jquery.swfuploader.multifile.errors.unkown_error", { 'default' : defaultMessage, message : message, error : errorCode } );
         break;
       }
       
@@ -194,9 +208,9 @@
   
   UploadBucket.prototype = {
     buildHeader : function(){
-      var $name = $('<div>').addClass("name").text( t( "jquery.swfuploader.multifile.labels.name", { default : "name" } ) );
-      var $size = $('<div>').addClass("size").text( t( "jquery.swfuploader.multifile.labels.size", { default : "size" } ) );
-      var $select = $('<div>').addClass("select").text(  t( "jquery.swfuploader.multifile.labels.select", { default : "remove?" } ) );
+      var $name = $('<div>').addClass("name").text( t( "jquery.swfuploader.multifile.labels.name", { 'default' : "name" } ) );
+      var $size = $('<div>').addClass("size").text( t( "jquery.swfuploader.multifile.labels.size", { 'default' : "size" } ) );
+      var $select = $('<div>').addClass("select").text(  t( "jquery.swfuploader.multifile.labels.select", { 'default' : "remove?" } ) );
 
       this.$header = $('<div>')
         .addClass("header")
@@ -236,8 +250,8 @@
       var bytes = formatFileSize(status.totalBytes);
       var defaultSizeStr = "Size: " + bytes
       var defaultFilesStr = "Files: " + status.numFilesSuccess + " / " + status.totalFiles;
-      var sizeStr = t( "jquery.swfuploader.multifile.total_size", { size : bytes, default : defaultSizeStr } );
-      var filesStr = t( "jquery.swfuploader.multifile.total_files", { success : status.numFilesSuccess, total : status.totalFiles, default : defaultFilesStr } );
+      var sizeStr = t( "jquery.swfuploader.multifile.labels.total_size", { size : bytes, 'default' : defaultSizeStr } );
+      var filesStr = t( "jquery.swfuploader.multifile.labels.total_files", { success : status.numFilesSuccess, total : status.totalFiles, 'default' : defaultFilesStr } );
       
       this.$totalSize.html(sizeStr);
       this.$totalFiles.html(filesStr);
