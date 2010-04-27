@@ -1,15 +1,8 @@
 (function($){
-  
-  var bindFunction = function(fn, target) {
-    return function(){
-      return fn.apply(target, arguments);
-    };
-  };
-  
   if(typeof I18n !== "undefined"){
 
-    var t = bindFunction(I18n.t, I18n);
-    var toNumber = bindFunction(I18n.toNumber, I18n);
+    var t = $.proxy(I18n.t, I18n);
+    var toNumber = $.proxy(I18n.toNumber, I18n);
 
   }else{
 

@@ -30,7 +30,8 @@
     });
   };
   
-  var bindFunction = function(fn, target) {
+  // backporting proxy function from jquery 1.4
+  $.proxy = $.proxy || function(fn, target) {
     return function(){
       return fn.apply(target, arguments);
     };
@@ -70,15 +71,15 @@
     };
     
     // override callbacks with our own
-    this.options.file_dialog_complete_handler  =  bindFunction(this.fileDialogComplete, this);
-    this.options.file_queued_handler           =  bindFunction(this.fileQueued, this);
-    this.options.file_queue_error_handler      =  bindFunction(this.fileQueueError, this);
-    this.options.queue_complete_handler        =  bindFunction(this.queueComplete, this);
-    this.options.upload_start_handler          =  bindFunction(this.uploadStart, this);
-    this.options.upload_progress_handler       =  bindFunction(this.uploadProgress, this);
-    this.options.upload_success_handler        =  bindFunction(this.uploadSuccess, this);
-    this.options.upload_complete_handler       =  bindFunction(this.uploadComplete, this);
-    this.options.upload_error_handler          =  bindFunction(this.uploadError, this);
+    this.options.file_dialog_complete_handler  =  $.proxy(this.fileDialogComplete, this);
+    this.options.file_queued_handler           =  $.proxy(this.fileQueued, this);
+    this.options.file_queue_error_handler      =  $.proxy(this.fileQueueError, this);
+    this.options.queue_complete_handler        =  $.proxy(this.queueComplete, this);
+    this.options.upload_start_handler          =  $.proxy(this.uploadStart, this);
+    this.options.upload_progress_handler       =  $.proxy(this.uploadProgress, this);
+    this.options.upload_success_handler        =  $.proxy(this.uploadSuccess, this);
+    this.options.upload_complete_handler       =  $.proxy(this.uploadComplete, this);
+    this.options.upload_error_handler          =  $.proxy(this.uploadError, this);
 
     // creating set object
     this.set = new this.setKlass(this);
@@ -212,16 +213,16 @@
     this.swfuploader = swfuploader;
     this.$el = this.swfuploader.$el;
     
-    this.swfuploader.observe("init_handler"                 , bindFunction(this.init, this));
-    this.swfuploader.observe("file_dialog_complete_handler" , bindFunction(this.fileDialogComplete, this));
-    this.swfuploader.observe("file_queued_handler"          , bindFunction(this.fileQueued, this));
-    this.swfuploader.observe("file_queue_error_handler"     , bindFunction(this.fileQueueError, this));
-    this.swfuploader.observe("queue_complete_handler"       , bindFunction(this.queueComplete, this));
-    this.swfuploader.observe("upload_start_handler"         , bindFunction(this.uploadStart, this));
-    this.swfuploader.observe("upload_progress_handler"      , bindFunction(this.uploadProgress, this));
-    this.swfuploader.observe("upload_success_handler"       , bindFunction(this.uploadSuccess, this));
-    this.swfuploader.observe("upload_complete_handler"      , bindFunction(this.uploadComplete, this));
-    this.swfuploader.observe("upload_error_handler"         , bindFunction(this.uploadError, this));
+    this.swfuploader.observe("init_handler"                 , $.proxy(this.init, this));
+    this.swfuploader.observe("file_dialog_complete_handler" , $.proxy(this.fileDialogComplete, this));
+    this.swfuploader.observe("file_queued_handler"          , $.proxy(this.fileQueued, this));
+    this.swfuploader.observe("file_queue_error_handler"     , $.proxy(this.fileQueueError, this));
+    this.swfuploader.observe("queue_complete_handler"       , $.proxy(this.queueComplete, this));
+    this.swfuploader.observe("upload_start_handler"         , $.proxy(this.uploadStart, this));
+    this.swfuploader.observe("upload_progress_handler"      , $.proxy(this.uploadProgress, this));
+    this.swfuploader.observe("upload_success_handler"       , $.proxy(this.uploadSuccess, this));
+    this.swfuploader.observe("upload_complete_handler"      , $.proxy(this.uploadComplete, this));
+    this.swfuploader.observe("upload_error_handler"         , $.proxy(this.uploadError, this));
   };
   
   AbstractSet.prototype = {
