@@ -157,8 +157,8 @@
     button_text_top_padding : 0,
     button_action           : SWFUpload.BUTTON_ACTION.SELECT_FILES,   
 
-    file_upload_limit       : 1,
-    file_queue_limit        : 1
+    file_upload_limit       : 0,
+    file_queue_limit        : 0
   };
   
   var UploadBucket = function(target){
@@ -267,10 +267,7 @@
       this.$removeButton = $("<div>").addClass("select").append(this.$removeButtonLink);
       
       var self = this;
-      this.$removeButtonLink.click(function(){
-        // cancel the upload of this file
-        self.swfu.cancelUpload(self.file, false);
-      });
+      this.$removeButtonLink.click(function(){ self.destroy() });
       
       return this.$removeButton;      
     },
@@ -304,7 +301,7 @@
       return this.$successButton;     
     },
     
-    buildErrorButton: function(){
+    buildErrorButton: function(){ 
       this.$errorButton = $("<span>").addClass("error");
       return this.$errorButton;     
     },    
@@ -343,22 +340,14 @@
       this.$el.addClass("success");
       this.toggleCancel(false);
       this.$removeButton.append(this.$successButton);     
+    },
+    
+    destroy : function(){
+      this.swfu.cancelUpload(this.file.id, false);
+      uploadProgressInstances[this.file.id] = null;
+      this.$el.remove();
     }
     
   };
-  
-  $.SwfUploader.sets.MultiFile.defaultOptions = {
-    button_image_url        : "",
-    button_width            : "140",
-    button_height           : "24",
-    button_text             : '<span class="button">Select Files to Upload</span>',
-    button_text_style       : ".button {font-size: 14px; kerning: true; font-weight: bold; color: #0063DC;text-decoration:underline;text-align:center}",
-    button_text_left_padding: 0,
-    button_text_top_padding : 0,
-    button_action           : SWFUpload.BUTTON_ACTION.SELECT_FILES,   
-
-    file_upload_limit       : 0,
-    file_queue_limit        : 0
-  }
   
 })(jQuery);
