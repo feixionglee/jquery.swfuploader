@@ -266,9 +266,10 @@
       this.$removeButtonLink = $("<a>").addClass("remove").attr("href", "#");
       this.$removeButton = $("<div>").addClass("select").append(this.$removeButtonLink);
       
+      var self = this;
       this.$removeButtonLink.click(function(){
         // cancel the upload of this file
-        this.swfu.cancelUpload(this.file, false);
+        self.swfu.cancelUpload(self.file, false);
       });
       
       return this.$removeButton;      
