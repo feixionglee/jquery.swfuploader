@@ -102,18 +102,21 @@ And you will get a nice looking upload bucket. Feel free to select multiple file
 
 h1. What exactly is a "Set" ?
 
-jquery.swfuploader does very little by itself. It is like a manager that delegates work to *sets* such as MultiFile or ExampleSet.
+jquery.swfuploader does very little by itself. It is like a manager that delegates work to *sets* such as MultiFile, SingleFile or ExampleSet.
 
-The *set* listens to events published by jquery.swfuploader and handles all the UI jobs. So they behave like views in terms of MVC.
+The *set* listens to events published by jquery.swfuploader and handles all the UI jobs. So they *behave like views* in terms of MVC.
 
-* The MultiFile is a UI that mimics Flickr upload.
+* The MultiFile set mimics Flickr upload.
+* The SingleFile set mimics gmail upload. (sort of)
 * ExampleSet is intended as a template for people who wants to create their own sets.
+
+For greater flexibility, I encourage you to make your own set from scratch or extend one of the available sets. This way, you can use jquery.metadata to pass in all options as json data, and put your application specific event handlers in your own set.
 
 h1. swfuploader parameters
 
 swfuploader takes a single options parameter.
 
-This parameter is an extension to the SWFUpload initialization options.
+This parameter is an extension to the SWFUpload initialization options. ( In fact the options is directly passed into SWFUpload during initialization )
 
 Here is the extended properties:
 
@@ -128,8 +131,8 @@ h3. init_handler
 *type:* Function Callback
 *Description:*  The specified function will be called right after the set is initialized. This callback has no parameters.
 
-All other SWFUpload properties and callbacks are usable as well.
-Please refer to the "SWFUpload Documentation":http://demo.swfupload.org/Documentation/ for more details
+*All other SWFUpload properties and callbacks are usable as well. ( Except button_placeholder_id and button_placeholder )*
+*Please refer to the "SWFUpload Documentation":http://demo.swfupload.org/Documentation/ for more details*
 
 h1. Example Showing All Available Options
 
