@@ -3,9 +3,11 @@ h1. jquery.swfuploader
 jquery.swfuploader takes away the pain of making your own multiple ajax file upload frontend. You get a nice flickr like UI with just a few lines of javascript.
 
 
-h1. Example App
+h1. Demo Site
 
-"Ruby on Rails based Example App":http://github.com/aq1018/jquery.swfuploader.example
+"Rails Demo Site":http://jquery-swfuploader.aaronqian.com/
+
+"Source code of the Demo Site":http://github.com/aq1018/jquery.swfuploader.example
 
 
 h1. Dependencies
