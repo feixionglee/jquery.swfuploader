@@ -15,9 +15,11 @@
     },
 
     fileDialogComplete: function(numFilesSelected, numFilesQueued, totalFilesInQueue) {
-      this.uploadBucket.$el.removeClass("init");
-      this.swf().startUpload();
+      if(numFilesSelected > 0) {
+        this.uploadBucket.$el.removeClass("init");        
+      }
       
+      this.swf().startUpload();      
       this.uploadBucket.updateStats(this.getStatus());
     },
     
