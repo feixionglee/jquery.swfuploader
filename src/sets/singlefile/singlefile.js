@@ -45,26 +45,21 @@
     },
     
     fileQueued : function(file){
-      console.log("fileQueued", arguments);
       this.$container.show();
       this.fileId = file.id;
     },
     
     fileQueueError : function(file, errorCode, message){
-      console.log("fileQueueError", arguments);
     },
     
     queueComplete : function(numFilesUploaded){
-      console.log("queueComplete", arguments);
     },
     
     uploadStart : function(file){
-      console.log("uploadStart", arguments, this);
       this.$status.html("Upload started...");
     },
     
     uploadProgress: function(file, bytesLoaded, bytesTotal) {
-      console.log("uploadProgress", arguments);
       var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
       percent = percent + "%"
       this.$indicator.css('width', percent);
@@ -73,17 +68,14 @@
     },
     
     uploadSuccess: function(file, serverData, response) {
-      console.log("uploadSuccess", arguments);
       this.$status.html("upload success!");
     },
     
     uploadComplete : function(file){
-      console.log("uploadComplete", arguments);
       this.$cancel.hide();
     },
     
     uploadError: function(file, errorCode, message) {
-      console.log("uploadError", arguments);
       this.$status.html("upload error!");
     }
   });
@@ -96,9 +88,9 @@
     button_text_style       : ".button {font-size: 14px; kerning: true; font-weight: bold; color: #0063DC;text-decoration:underline;text-align:center}",
     button_text_left_padding: 0,
     button_text_top_padding : 0,
-    button_action           : SWFUpload.BUTTON_ACTION.SELECT_FILES,   
+    button_action           : SWFUpload.BUTTON_ACTION.SELECT_FILE,   
 
-    file_upload_limit       : 1,
-    file_queue_limit        : 1
+    file_upload_limit       : 0,
+    file_queue_limit        : 0
   }
 })(jQuery);
