@@ -28,6 +28,9 @@
         $el.data('swfuploader', swfu);
       }
     });
+    
+    // returns the jquery object    
+    return this;
   };
   
   // backporting proxy function from jquery 1.4
@@ -59,6 +62,7 @@
     // save user defined callbacks
     this.userCallbacks = {
       init_handler                    : this.options.init_handler,
+      init_complete_handler           : this.options.init_complete_handler,
       file_dialog_complete_handler    : this.options.file_dialog_complete_handler,
       file_queued_handler             : this.options.file_queued_handler,
       file_queue_error_handler        : this.options.file_queue_error_handler,
@@ -89,7 +93,7 @@
     // we use register user callbacks now
     $.each(this.userCallbacks, function(eventName, fn){
       if(typeof fn === "function"){
-        self.observe(eventName, fn);        
+        self.observe(eventName, $.proxy(fn, self));        
       }
     });
 
@@ -125,6 +129,8 @@
       
       // creating swfuplod object
       this.swfu = new SWFUpload(this.options);
+      
+      this.publish("init_complete_handler", arguments);
     },
   
     // file_dialog_complete_handler
@@ -215,6 +221,7 @@
     this.$el = this.swfuploader.$el;
     
     this.swfuploader.observe("init_handler"                 , $.proxy(this.init, this));
+    this.swfuploader.observe("init_complete_handler"        , $.proxy(this.init_complete, this));
     this.swfuploader.observe("file_dialog_complete_handler" , $.proxy(this.fileDialogComplete, this));
     this.swfuploader.observe("file_queued_handler"          , $.proxy(this.fileQueued, this));
     this.swfuploader.observe("file_queue_error_handler"     , $.proxy(this.fileQueueError, this));
@@ -227,7 +234,13 @@
   };
   
   AbstractSet.prototype = {
+    // init_handler
     init  : function(){
+      
+    },
+    
+    // init_complete_handler
+    init_complete : function() {
       
     },
     

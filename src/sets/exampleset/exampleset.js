@@ -8,15 +8,24 @@
     
     /***************************************************************************************************
     *
-    *  This function is called when swfuploader finishes instantiation
-    *  The SwfUpload Object is not created yet.
-    *  You can create your UI objects, setting up interactions and behaviors here
+    *  This function is called before swfuploader starts instantiation
+    *  The SwfUpload Object is not yet created at this stage
     *  IMPORTANT: you must call #setButtonPlaceholder here
     *             so SwfUpload can create the flash object by replacing the placeholder element
     *
     *****************************************************************************************************/    
     init : function() {
       this.setButtonPlaceholder(this.$el);
+    },
+    
+    /***************************************************************************************************
+    *
+    *  This function is called when swfuploader finishes instantiation
+    *  The SwfUpload Object is already created and accessible through this.swf()
+    *  You can create your UI objects, setting up interactions and behaviors here
+    *
+    *****************************************************************************************************/    
+    init_complete : function() {
     },
     
     
